@@ -21,23 +21,38 @@ interface SymbolTileProps {
 export function SymbolTile({ symbol, winning, dropping, dropDelay = 0 }: SymbolTileProps) {
   const def = SYMBOLS[symbol]
   const isRoyal = def.image === null
+  const tint = isRoyal ? ROYAL_TINT[symbol] : undefined
 
   return (
     <div
       className={cn(
-        "relative flex aspect-square w-full items-center justify-center rounded-md",
-        "bg-gradient-to-b from-white/[0.06] to-black/30 ring-1 ring-inset ring-white/5",
+        "group relative flex aspect-square w-full items-center justify-center rounded-xl",
+        // engraved obsidian tile with inset highlight + gold hairline
+        "bg-gradient-to-b from-white/[0.09] via-white/[0.02] to-black/45",
+        "ring-1 ring-inset ring-white/[0.08]",
+        "shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),inset_0_-8px_18px_-12px_rgba(0,0,0,0.8)]",
         dropping && "animate-drop",
-        winning && "animate-win z-10 ring-[var(--gold)]/70",
+        winning && "animate-win z-10 ring-[var(--gold)]/80",
       )}
       style={dropping ? { animationDelay: `${dropDelay}ms` } : undefined}
     >
+      {/* faint gem aura tinted to the symbol */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 rounded-xl opacity-40"
+        style={{
+          background: `radial-gradient(75% 65% at 50% 35%, ${
+            tint ?? "oklch(0.83 0.14 85)"
+          }22, transparent 70%)`,
+        }}
+      />
+
       {isRoyal ? (
         <span
-          className="font-heading text-2xl font-extrabold leading-none drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)] sm:text-3xl md:text-4xl"
+          className="relative font-heading text-2xl font-extrabold leading-none sm:text-3xl md:text-[2.4rem]"
           style={{
-            color: ROYAL_TINT[symbol],
-            textShadow: `0 0 14px ${ROYAL_TINT[symbol]}55`,
+            color: tint,
+            textShadow: `0 0 16px ${tint}66, 0 2px 4px rgba(0,0,0,0.7)`,
           }}
         >
           {symbol === "T" ? "10" : symbol}
@@ -47,14 +62,21 @@ export function SymbolTile({ symbol, winning, dropping, dropDelay = 0 }: SymbolT
           src={def.image! || "/placeholder.svg"}
           alt={def.label}
           className={cn(
-            "h-[78%] w-[78%] object-contain transition-transform",
-            winning ? "scale-110 drop-shadow-[0_0_12px_rgba(231,184,80,0.7)]" : "drop-shadow-[0_3px_6px_rgba(0,0,0,0.5)]",
+            "relative h-[80%] w-[80%] object-contain transition-transform duration-300",
+            winning
+              ? "scale-[1.14] drop-shadow-[0_0_16px_rgba(231,184,80,0.85)]"
+              : "drop-shadow-[0_4px_8px_rgba(0,0,0,0.55)] group-hover:scale-[1.04]",
           )}
           draggable={false}
         />
       )}
+
+      {/* win overlay: glowing wash + corner sparks */}
       {winning && (
-        <span className="pointer-events-none absolute inset-0 rounded-md bg-[var(--gold)]/10" />
+        <>
+          <span className="pointer-events-none absolute inset-0 rounded-xl bg-[var(--gold)]/12" />
+          <span className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-[var(--gold)]/60" />
+        </>
       )}
     </div>
   )

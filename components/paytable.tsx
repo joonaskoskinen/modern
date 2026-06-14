@@ -27,7 +27,7 @@ export function Paytable({ onClose }: { onClose: () => void }) {
       onClick={onClose}
     >
       <div
-        className="relative max-h-[88vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-[var(--gold)]/30 bg-card p-5 panel-glow sm:p-6"
+        className="glass animate-banner relative max-h-[88vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-[var(--gold)]/35 p-5 panel-glow sm:p-6"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -39,10 +39,10 @@ export function Paytable({ onClose }: { onClose: () => void }) {
           <X className="size-5" />
         </button>
 
-        <p className="font-heading text-xs tracking-[0.4em] text-[var(--turquoise)] uppercase">
+        <p className="font-heading text-xs uppercase tracking-emblem text-[var(--turquoise)]">
           Voittotaulukko
         </p>
-        <h2 className="gold-text font-heading text-2xl font-extrabold">Eye of Anubis</h2>
+        <h2 className="gold-text font-heading text-2xl font-extrabold sm:text-3xl">Eye of Anubis</h2>
         <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
           117 649 tapaa voittaa. Samat symbolit peräkkäisillä rullilla vasemmalta lukien.
           Kertoimet ovat panoksen kerrannaisia (3× / 4× / 5× / 6× symbolia).
@@ -54,9 +54,9 @@ export function Paytable({ onClose }: { onClose: () => void }) {
             return (
               <div
                 key={id}
-                className="flex items-center gap-3 rounded-xl border border-white/10 bg-black/25 px-3 py-2"
+                className="flex items-center gap-3 rounded-xl border border-white/10 bg-black/30 px-3 py-2 transition hover:border-[var(--gold)]/30"
               >
-                <div className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-white/[0.04]">
+                <div className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-white/[0.05] ring-1 ring-inset ring-white/[0.06]">
                   {def.image ? (
                     <img src={def.image || "/placeholder.svg"} alt={def.label} className="h-9 w-9 object-contain" />
                   ) : (

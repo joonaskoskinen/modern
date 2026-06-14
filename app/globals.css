@@ -10,7 +10,10 @@
   --font-mono: var(--font-geist-mono), 'Geist Mono Fallback';
   --color-gold: var(--gold);
   --color-gold-soft: var(--gold-soft);
+  --color-gold-deep: var(--gold-deep);
   --color-turquoise: var(--turquoise);
+  --color-lapis: var(--lapis);
+  --color-ember: var(--ember);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -53,41 +56,48 @@
 
 :root {
   color-scheme: dark;
-  --background: oklch(0.17 0.025 250);
-  --foreground: oklch(0.95 0.015 90);
-  --card: oklch(0.22 0.03 255);
-  --card-foreground: oklch(0.95 0.015 90);
-  --popover: oklch(0.2 0.03 255);
-  --popover-foreground: oklch(0.95 0.015 90);
-  --primary: oklch(0.8 0.13 85);
-  --primary-foreground: oklch(0.18 0.03 255);
-  --secondary: oklch(0.28 0.035 255);
-  --secondary-foreground: oklch(0.95 0.015 90);
-  --muted: oklch(0.26 0.03 255);
-  --muted-foreground: oklch(0.72 0.03 250);
-  --accent: oklch(0.72 0.1 190);
-  --accent-foreground: oklch(0.18 0.03 255);
-  --destructive: oklch(0.6 0.22 25);
-  --border: oklch(0.8 0.13 85 / 18%);
-  --input: oklch(1 0 0 / 14%);
-  --ring: oklch(0.8 0.13 85 / 60%);
-  --gold: oklch(0.82 0.14 85);
-  --gold-soft: oklch(0.88 0.1 90);
-  --turquoise: oklch(0.74 0.11 190);
-  --chart-1: oklch(0.82 0.14 85);
-  --chart-2: oklch(0.74 0.11 190);
+  /* Deep obsidian/onyx base — warmer and richer than before */
+  --background: oklch(0.145 0.018 255);
+  --foreground: oklch(0.95 0.018 88);
+  --card: oklch(0.205 0.024 258);
+  --card-foreground: oklch(0.95 0.018 88);
+  --popover: oklch(0.185 0.024 258);
+  --popover-foreground: oklch(0.95 0.018 88);
+  --primary: oklch(0.81 0.135 85);
+  --primary-foreground: oklch(0.16 0.03 258);
+  --secondary: oklch(0.27 0.03 258);
+  --secondary-foreground: oklch(0.95 0.018 88);
+  --muted: oklch(0.25 0.026 258);
+  --muted-foreground: oklch(0.72 0.028 250);
+  --accent: oklch(0.74 0.1 192);
+  --accent-foreground: oklch(0.16 0.03 258);
+  --destructive: oklch(0.62 0.22 25);
+  --border: oklch(0.82 0.135 85 / 16%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.82 0.135 85 / 55%);
+
+  /* Brand accents */
+  --gold: oklch(0.83 0.14 85);
+  --gold-soft: oklch(0.9 0.1 90);
+  --gold-deep: oklch(0.62 0.12 68);
+  --turquoise: oklch(0.76 0.11 192);
+  --lapis: oklch(0.55 0.13 255);
+  --ember: oklch(0.7 0.16 45);
+
+  --chart-1: oklch(0.83 0.14 85);
+  --chart-2: oklch(0.76 0.11 192);
   --chart-3: oklch(0.6 0.13 50);
-  --chart-4: oklch(0.5 0.08 255);
+  --chart-4: oklch(0.55 0.13 255);
   --chart-5: oklch(0.7 0.12 30);
-  --radius: 0.75rem;
-  --sidebar: oklch(0.2 0.03 255);
-  --sidebar-foreground: oklch(0.95 0.015 90);
-  --sidebar-primary: oklch(0.8 0.13 85);
-  --sidebar-primary-foreground: oklch(0.18 0.03 255);
-  --sidebar-accent: oklch(0.28 0.035 255);
-  --sidebar-accent-foreground: oklch(0.95 0.015 90);
-  --sidebar-border: oklch(0.8 0.13 85 / 18%);
-  --sidebar-ring: oklch(0.8 0.13 85 / 60%);
+  --radius: 0.85rem;
+  --sidebar: oklch(0.185 0.024 258);
+  --sidebar-foreground: oklch(0.95 0.018 88);
+  --sidebar-primary: oklch(0.83 0.14 85);
+  --sidebar-primary-foreground: oklch(0.16 0.03 258);
+  --sidebar-accent: oklch(0.27 0.03 258);
+  --sidebar-accent-foreground: oklch(0.95 0.018 88);
+  --sidebar-border: oklch(0.82 0.135 85 / 16%);
+  --sidebar-ring: oklch(0.82 0.135 85 / 55%);
 }
 
 @layer base {
@@ -109,37 +119,101 @@
   .font-heading {
     font-family: var(--font-cinzel), serif;
   }
+
+  /* Polished metallic gold lettering with vertical sheen */
   .gold-text {
     background: linear-gradient(
       180deg,
-      oklch(0.94 0.09 95) 0%,
-      oklch(0.82 0.14 85) 45%,
-      oklch(0.66 0.13 70) 100%
+      oklch(0.97 0.06 95) 0%,
+      oklch(0.88 0.13 88) 30%,
+      oklch(0.78 0.15 82) 52%,
+      oklch(0.6 0.12 66) 74%,
+      oklch(0.82 0.13 86) 100%
     );
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent;
+    filter: drop-shadow(0 1px 0 oklch(0.4 0.08 60 / 0.5));
   }
+
   .gold-border {
-    border: 1px solid oklch(0.82 0.14 85 / 45%);
+    border: 1px solid oklch(0.83 0.14 85 / 42%);
   }
+
+  /* Engraved hairline-gold framed glass panel */
   .panel-glow {
-    box-shadow: 0 0 0 1px oklch(0.82 0.14 85 / 25%),
-      0 20px 60px -20px oklch(0 0 0 / 70%),
-      inset 0 1px 0 0 oklch(1 0 0 / 6%);
+    box-shadow: 0 0 0 1px oklch(0.83 0.14 85 / 22%),
+      0 24px 70px -28px oklch(0 0 0 / 0.85),
+      inset 0 1px 0 0 oklch(1 0 0 / 0.07),
+      inset 0 0 40px -20px oklch(0.83 0.14 85 / 0.25);
+  }
+
+  /* Luxe glass card */
+  .glass {
+    background: linear-gradient(
+      160deg,
+      oklch(0.26 0.028 258 / 0.78),
+      oklch(0.17 0.022 258 / 0.82)
+    );
+    backdrop-filter: blur(14px) saturate(1.2);
+    -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  }
+
+  /* Hairline gold divider */
+  .rule-gold {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      oklch(0.83 0.14 85 / 0.55),
+      transparent
+    );
+  }
+
+  /* Animated gold sheen sweep (used on primary button) */
+  .sheen {
+    position: relative;
+    overflow: hidden;
+  }
+  .sheen::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 35%,
+      oklch(1 0 0 / 0.45) 50%,
+      transparent 65%
+    );
+    transform: translateX(-120%);
+    animation: sheen-sweep 3.4s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  .tracking-emblem {
+    letter-spacing: 0.42em;
+  }
+}
+
+@keyframes sheen-sweep {
+  0% {
+    transform: translateX(-120%);
+  }
+  55%,
+  100% {
+    transform: translateX(120%);
   }
 }
 
 @keyframes pulse-glow {
   0%,
   100% {
-    box-shadow: 0 0 0 0 oklch(0.82 0.14 85 / 55%),
-      0 0 22px 2px oklch(0.82 0.14 85 / 35%);
+    box-shadow: 0 0 0 0 oklch(0.83 0.14 85 / 0.6),
+      0 0 24px 2px oklch(0.83 0.14 85 / 0.4);
   }
   50% {
-    box-shadow: 0 0 0 3px oklch(0.82 0.14 85 / 25%),
-      0 0 40px 8px oklch(0.82 0.14 85 / 55%);
+    box-shadow: 0 0 0 3px oklch(0.83 0.14 85 / 0.28),
+      0 0 46px 10px oklch(0.83 0.14 85 / 0.6);
   }
 }
 .animate-win {
@@ -148,20 +222,20 @@
 
 @keyframes drop-in {
   0% {
-    transform: translateY(-120%);
+    transform: translateY(-130%) scale(0.92);
     opacity: 0;
   }
-  70% {
-    transform: translateY(6%);
+  68% {
+    transform: translateY(7%) scale(1.03);
     opacity: 1;
   }
   100% {
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
     opacity: 1;
   }
 }
 .animate-drop {
-  animation: drop-in 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: drop-in 0.46s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 @keyframes shimmer {
@@ -205,4 +279,77 @@
 }
 .animate-pop {
   animation: pop-in 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* Slow idle levitation for the reel frame ornaments */
+@keyframes levitate {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+.animate-levitate {
+  animation: levitate 4.5s ease-in-out infinite;
+}
+
+/* Drifting atmospheric dust motes */
+@keyframes drift {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  15% {
+    opacity: var(--mote-opacity, 0.5);
+  }
+  100% {
+    transform: translateY(-120px) translateX(var(--mote-x, 20px));
+    opacity: 0;
+  }
+}
+.animate-drift {
+  animation: drift var(--mote-dur, 9s) linear infinite;
+}
+
+/* Cinematic banner entrance */
+@keyframes banner-rise {
+  0% {
+    transform: translateY(28px) scale(0.85);
+    opacity: 0;
+    filter: blur(8px);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+.animate-banner {
+  animation: banner-rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Radiant ring expansion behind big wins */
+@keyframes ring-burst {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+.animate-ring-burst {
+  animation: ring-burst 1.6s ease-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sheen::after,
+  .animate-levitate,
+  .animate-drift,
+  .animate-ring-burst {
+    animation: none;
+  }
 }

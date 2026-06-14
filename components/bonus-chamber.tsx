@@ -28,14 +28,14 @@ export function BonusChamber({ bet, onComplete }: BonusChamberProps) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/90 backdrop-blur-md">
       <div
-        className="relative mx-4 w-full max-w-3xl rounded-2xl border border-[var(--gold)]/30 bg-card p-5 panel-glow sm:p-8"
+        className="glass animate-banner relative mx-4 w-full max-w-3xl rounded-2xl border border-[var(--gold)]/35 p-5 panel-glow sm:p-8"
         style={{
           backgroundImage:
-            "radial-gradient(120% 80% at 50% -10%, oklch(0.82 0.14 85 / 0.12), transparent 60%)",
+            "radial-gradient(120% 80% at 50% -10%, oklch(0.83 0.14 85 / 0.14), transparent 60%)",
         }}
       >
         <div className="text-center">
-          <p className="font-heading text-xs tracking-[0.4em] text-[var(--turquoise)] uppercase">
+          <p className="font-heading text-xs uppercase tracking-emblem text-[var(--turquoise)]">
             Bonuspeli
           </p>
           <h2 className="gold-text font-heading text-2xl font-extrabold tracking-wide sm:text-4xl">
@@ -93,7 +93,12 @@ export function BonusChamber({ bet, onComplete }: BonusChamberProps) {
                   />
                 ) : isExit ? (
                   <div className="flex flex-col items-center gap-1">
-                    <span className="font-heading text-3xl">𓂀</span>
+                    <img
+                      src="/sym-eye.png"
+                      alt="Anubiksen sinetti"
+                      className="size-9 object-contain opacity-70 grayscale"
+                      draggable={false}
+                    />
                     <span className="text-[10px] font-semibold uppercase tracking-widest text-destructive">
                       Sinetti
                     </span>

@@ -13,6 +13,7 @@ import { ControlPanel } from "./control-panel"
 import { WinBanner } from "./win-banner"
 import { Paytable } from "./paytable"
 import { BonusChamber } from "./bonus-chamber"
+import { Atmosphere } from "./atmosphere"
 import { Coins } from "lucide-react"
 
 const STORAGE_KEY = "eye-of-anubis-balance"
@@ -177,54 +178,61 @@ export function SlotMachine() {
   const lowFunds = balance < bet
 
   return (
-    <main className="relative min-h-screen overflow-hidden">
-      {/* Atmospheric background */}
-      <div
-        aria-hidden="true"
-        className="fixed inset-0 -z-10 bg-cover bg-center"
-        style={{ backgroundImage: "url(/bg-temple.png)" }}
-      />
-      <div aria-hidden="true" className="fixed inset-0 -z-10 bg-background/70" />
-      <div
-        aria-hidden="true"
-        className="fixed inset-0 -z-10"
-        style={{
-          background:
-            "radial-gradient(80% 60% at 50% 0%, oklch(0.82 0.14 85 / 0.10), transparent 55%)",
-        }}
-      />
+    <main className="relative flex min-h-[100dvh] flex-col overflow-hidden">
+      <Atmosphere />
 
-      <div className="mx-auto flex min-h-screen w-full max-w-3xl flex-col px-3 py-5 sm:px-4 sm:py-7">
+      <div className="mx-auto flex min-h-[100dvh] w-full max-w-5xl flex-col px-3 py-4 sm:px-5 sm:py-6 lg:py-8">
         {/* Header */}
-        <header className="mb-4 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5">
-            <span className="font-heading text-3xl leading-none text-gold drop-shadow-[0_0_12px_rgba(231,184,80,0.5)]">
-              𓂀
+        <header className="mb-4 flex items-center justify-between gap-3 sm:mb-6">
+          <div className="flex items-center gap-3">
+            <span className="flex size-11 items-center justify-center rounded-full border border-[var(--gold)]/40 bg-black/40 shadow-[0_0_20px_-4px_rgba(231,184,80,0.6)] sm:size-12">
+              <img
+                src="/sym-eye.png"
+                alt="Eye of Anubis -tunnus"
+                className="size-7 object-contain drop-shadow-[0_0_8px_rgba(231,184,80,0.5)] sm:size-8"
+                draggable={false}
+              />
             </span>
             <div>
-              <h1 className="gold-text font-heading text-lg font-extrabold leading-tight tracking-wide sm:text-2xl">
+              <h1 className="gold-text font-heading text-xl font-extrabold leading-none tracking-wide sm:text-3xl">
                 Eye of Anubis
               </h1>
-              <p className="text-[10px] uppercase tracking-[0.35em] text-[var(--turquoise)] sm:text-xs">
-                Megaways
+              <p className="mt-1 text-[10px] uppercase tracking-emblem text-[var(--turquoise)] sm:text-xs">
+                Megaways · Cascading Reels
               </p>
             </div>
           </div>
-          <span className="rounded-full border border-white/10 bg-black/30 px-3 py-1 font-mono text-[10px] tracking-wider text-muted-foreground sm:text-xs">
+          <div className="hidden flex-col items-end sm:flex">
+            <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
+              Saldo
+            </span>
+            <span className="gold-text font-heading text-xl font-bold tabular-nums">
+              {formatCoins(balance)}
+            </span>
+          </div>
+          <span className="rounded-full border border-white/10 bg-black/40 px-3 py-1 font-mono text-[10px] tracking-wider text-muted-foreground sm:hidden">
             117 649 tapaa
           </span>
         </header>
 
         {/* Reel board */}
         <section className="relative flex flex-1 items-center justify-center">
-          <div className="relative w-full rounded-2xl border border-[var(--gold)]/25 bg-black/40 p-2.5 panel-glow backdrop-blur-sm sm:p-4">
+          <div className="glass relative w-full rounded-[1.75rem] border border-[var(--gold)]/30 p-3 panel-glow sm:p-5 lg:p-6">
+            {/* top engraved title plate */}
+            <div className="mb-3 flex items-center justify-center gap-3 sm:mb-4">
+              <span className="h-px w-10 rule-gold sm:w-16" />
+              <span className="font-heading text-[10px] uppercase tracking-emblem text-gold/80 sm:text-xs">
+                {formatCoins(ways)} tapaa voittaa
+              </span>
+              <span className="h-px w-10 rule-gold sm:w-16" />
+            </div>
+
             {/* corner ornaments */}
-            <span className="pointer-events-none absolute left-2 top-2 font-heading text-sm text-gold/50">
-              𓋹
-            </span>
-            <span className="pointer-events-none absolute right-2 top-2 font-heading text-sm text-gold/50">
-              𓋹
-            </span>
+            <span className="pointer-events-none absolute left-2.5 top-2.5 size-2 rotate-45 border border-gold/60 bg-gold/10 sm:left-3 sm:top-3" />
+            <span className="pointer-events-none absolute right-2.5 top-2.5 size-2 rotate-45 border border-gold/60 bg-gold/10 sm:right-3 sm:top-3" />
+            <span className="pointer-events-none absolute bottom-2.5 left-2.5 size-2 rotate-45 border border-gold/50 bg-gold/10 sm:bottom-3 sm:left-3" />
+            <span className="pointer-events-none absolute bottom-2.5 right-2.5 size-2 rotate-45 border border-gold/50 bg-gold/10 sm:bottom-3 sm:right-3" />
+
             <div className="flex justify-center">
               <Reels
                 grid={grid}
@@ -236,9 +244,12 @@ export function SlotMachine() {
 
             {/* Win pill */}
             {displayWin > 0 && (
-              <div className="pointer-events-none absolute -bottom-3 left-1/2 -translate-x-1/2">
-                <div className="animate-pop rounded-full border border-[var(--gold)]/50 bg-card px-5 py-1.5 panel-glow">
-                  <span className="gold-text font-heading text-base font-extrabold tabular-nums sm:text-lg">
+              <div className="pointer-events-none absolute -bottom-4 left-1/2 -translate-x-1/2">
+                <div className="animate-pop flex items-center gap-2 rounded-full border border-[var(--gold)]/60 bg-card px-6 py-2 panel-glow">
+                  <span className="text-[9px] uppercase tracking-[0.3em] text-[var(--turquoise)]">
+                    Voitto
+                  </span>
+                  <span className="gold-text font-heading text-lg font-extrabold tabular-nums sm:text-xl">
                     +{formatCoins(displayWin)}
                   </span>
                 </div>
@@ -248,16 +259,16 @@ export function SlotMachine() {
         </section>
 
         {/* Controls */}
-        <section className="mt-6">
+        <section className="mt-7 sm:mt-8">
           {lowFunds && !spinning && !bonusActive ? (
-            <div className="mb-3 flex items-center justify-between gap-3 rounded-2xl border border-[var(--gold)]/30 bg-card/80 p-3 panel-glow">
-              <p className="text-sm text-muted-foreground">
+            <div className="glass mb-3 flex flex-col items-center justify-between gap-3 rounded-2xl border border-[var(--gold)]/30 p-3 panel-glow sm:flex-row">
+              <p className="text-center text-sm text-muted-foreground sm:text-left">
                 Kolikot loppuivat. Hae lisää leikkikolikoita ja jatka peliä.
               </p>
               <button
                 type="button"
                 onClick={addCoins}
-                className="flex shrink-0 items-center gap-2 rounded-xl bg-[var(--gold)] px-4 py-2.5 font-heading text-sm font-bold text-[var(--primary-foreground)] transition hover:bg-[var(--gold-soft)]"
+                className="sheen flex w-full shrink-0 items-center justify-center gap-2 rounded-xl bg-[var(--gold)] px-4 py-2.5 font-heading text-sm font-bold text-[var(--primary-foreground)] transition hover:bg-[var(--gold-soft)] sm:w-auto"
               >
                 <Coins className="size-4" />
                 +{formatCoins(START_BALANCE)}
@@ -278,7 +289,7 @@ export function SlotMachine() {
             onToggleAuto={toggleAuto}
             onOpenPaytable={() => setShowPaytable(true)}
           />
-          <p className="mt-3 text-center text-[10px] leading-relaxed text-muted-foreground">
+          <p className="mt-3 text-center text-[10px] leading-relaxed tracking-wide text-muted-foreground">
             Vain viihdekäyttöön · Leikkikolikoilla · Ei oikeaa rahaa
           </p>
         </section>
