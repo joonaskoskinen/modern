@@ -6,6 +6,7 @@ import {
   INITIAL_GRID,
   countWays,
   formatCoins,
+  REELS,
   type Grid,
 } from "@/lib/slot-engine"
 import { Reels } from "./reels"
@@ -28,6 +29,7 @@ export function SlotMachine() {
   const [grid, setGrid] = useState<Grid>(INITIAL_GRID)
   const [winning, setWinning] = useState<Set<string>>(new Set())
   const [spinning, setSpinning] = useState(false)
+  const [stoppedReels, setStoppedReels] = useState(REELS)
   const [dropping, setDropping] = useState(false)
   const [displayWin, setDisplayWin] = useState(0)
   const [ways, setWays] = useState(() => countWays(INITIAL_GRID))
@@ -83,23 +85,41 @@ export function SlotMachine() {
     setBanner(null)
     setWinning(new Set())
     setDisplayWin(0)
+    setStoppedReels(0)
     setSpinning(true)
 
     const result = runEngineSpin(stake)
     setWays(result.ways)
+    // The board the reels will land on (first cascade step = raw spin result).
+    setGrid(result.steps[0].grid)
 
-    await sleep(720)
+    // Spin-up before the leftmost reel begins to stop.
+    await sleep(420)
     if (!mounted.current) return
+
+    // Stop reels one at a time, left → right, like a classic fruit machine.
+    for (let r = 1; r <= REELS; r++) {
+      setStoppedReels(r)
+      await sleep(r === REELS ? 200 : 150)
+      if (!mounted.current) return
+    }
     setSpinning(false)
+    await sleep(120)
+    if (!mounted.current) return
 
     let running = 0
-    for (const step of result.steps) {
+    for (let i = 0; i < result.steps.length; i++) {
+      const step = result.steps[i]
       if (!mounted.current) return
-      setGrid(step.grid)
-      setWinning(new Set())
-      setDropping(true)
-      await sleep(440)
-      setDropping(false)
+      // Step 0 is already on screen (the reels just landed on it), so we
+      // only run the drop animation for subsequent cascade steps.
+      if (i > 0) {
+        setGrid(step.grid)
+        setWinning(new Set())
+        setDropping(true)
+        await sleep(440)
+        setDropping(false)
+      }
       if (step.wins.length > 0) {
         setWinning(new Set(step.cleared.map(([r, c]) => `${r}:${c}`)))
         running = +(running + step.stepWin).toFixed(2)
@@ -239,6 +259,7 @@ export function SlotMachine() {
                 winningPositions={winning}
                 spinning={spinning}
                 dropping={dropping}
+                stoppedReels={stoppedReels}
               />
             </div>
 

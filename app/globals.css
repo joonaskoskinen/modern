@@ -345,11 +345,43 @@
   animation: ring-burst 1.6s ease-out infinite;
 }
 
+/* Fruit-machine vertical reel roll (strip is duplicated for a seamless loop) */
+@keyframes reel-roll {
+  from {
+    transform: translateY(-50%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+.animate-reel-roll {
+  animation: reel-roll 0.32s linear infinite;
+  will-change: transform;
+}
+
+/* Settle bounce played once when a reel snaps to its result */
+@keyframes reel-land {
+  0% {
+    transform: translateY(-15%);
+  }
+  58% {
+    transform: translateY(4%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+.animate-reel-land {
+  animation: reel-land 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .sheen::after,
   .animate-levitate,
   .animate-drift,
-  .animate-ring-burst {
+  .animate-ring-burst,
+  .animate-reel-roll,
+  .animate-reel-land {
     animation: none;
   }
 }
